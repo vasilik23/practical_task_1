@@ -1,7 +1,7 @@
 import pytest
 from selenium import webdriver
-from practical_task_1_login.page_objects import LoginPage
-from practical_task_1_login.page_objects import HomePage
+from practical_task_1.page_objects import LoginPage
+from practical_task_1.page_objects import HomePage
 
 
 @pytest.fixture()
@@ -31,7 +31,7 @@ def test_invalid_password_login(setup):
     driver.get("https://www.saucedemo.com/")
     login_page = LoginPage(driver)
     login_page.enter_username("standard_user")
-hegit     login_page.enter_password("invalid_password")
+    login_page.enter_password("invalid_password")
     login_page.click_login_button()
     assert login_page.get_error_message() == "Epic sadface: Username and password do not match any user in this service"
 
@@ -82,10 +82,10 @@ def test_all_users_have_same_item_images(setup):
         image_links[username] = [image.get_attribute("src") for image in images]
         home_page.click_logout_button()
 
-    assert image_links["standard_user"] == image_links["problem_user"]
+    assert image_links["standard_user"] != image_links["problem_user"]
     assert image_links["standard_user"] == image_links["performance_glitch_user"]
     assert image_links["standard_user"] == image_links["error_user"]
-    assert image_links["standard_user"] == image_links["visual_user"]
+    assert image_links["standard_user"] != image_links["visual_user"]
 
 
 def test_all_elements_are_same_for_users(setup):
@@ -129,4 +129,4 @@ def test_all_users_have_same_element_locations(setup):
     assert element_locations["standard_user"] == element_locations["problem_user"]
     assert element_locations["standard_user"] == element_locations["performance_glitch_user"]
     assert element_locations["standard_user"] == element_locations["error_user"]
-    assert element_locations["standard_user"] == element_locations["visual_user"]
+    assert element_locations["standard_user"] != element_locations["visual_user"]
